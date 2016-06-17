@@ -59,9 +59,8 @@
 					<div id="tab-1a" class="ui-body-d ui-content">
 						<h4>Food content</h4>
 						
-						<!-- <input data-enhanced="true" type="button" value="Input" id="target"/> -->	
-							<!-- <input data-enhanced="true" type="button" value="Input" id="fooditems"/> -->
-							 <ul id="foodList"></ul>
+						
+						<ul id="foodList"> </ul>
 					</div>
 					<div id="tab-1b" class="ui-body-d ui-content">
 						<h4>Games</h4>
@@ -79,6 +78,49 @@
 			</div>
 			
 		</div>
+		
+			 <div data-role="page" id="application-status" data-add-back-btn="true">
+        <div data-role="header">
+            <h4>Invoice  Status for </h4>
+        </div>
+        <div id="application-status-content" name="application-status-content" role="main" class="ui-content">
+            <table data-role="table" id="app-status-table" data-mode="reflow" class="ui-responsive table-stroke">
+                <thead>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div data-role="footer"></div>
+    </div>
+		
+		<div data-role="page" id="CuisineOrderPage">
+		<form class="orderForm">
+		<input type="hidden" name="nameOfUserOrdering" id ="nameOfUserOrdering" value="">
+		<div class="ui-field-contain">
+					<label for="fname">Food Name</label>
+					<input name="fname" id="fname" data-clear-btn="true" value="" type="text"/>
+				</div>
+	   <div class="ui-field-contain">
+					<label for="qty">Quantity</label>
+					<input name="quantity" id="quantity" data-clear-btn="true" value="" type="text"/>
+				</div>
+		<div class="ui-field-contain">
+					<label for="fType">Type</label>
+					<select name="fType" id="fType">
+						<option value="breakfast" selected="selected">BreakFast</option>
+						<option value="lunch">Lunch</option>
+						<option value="Dinner">Dinner</option>
+					</select>
+				</div>
+				
+		<div class="ui-input-btn ui-btn ui-corner-all">
+					Order
+					<input data-enhanced="true" type="button" value="Order" id="order"/>
+				</div>
+				</form>
+		</div>
+		
+		
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>
