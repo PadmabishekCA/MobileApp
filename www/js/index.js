@@ -155,10 +155,8 @@ $( "#fooditems" ).click(function() {
 
 
 $("#foodList").on("click", "a[data-id]", function() {
-	alert("hello");
-	
-    displayObject($(this).attr("data-id"));
-	//displayObject($(this).data("#id"));
+	 displayObject($(this).attr("data-id"));
+
 });
 //Order submission
 $("#order").click(function() {
@@ -173,7 +171,6 @@ $("#order").click(function() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
-        	alert('Works!');
         	console.log("Final here in js"+ JSON.stringify(response));
         	var tHead = $('table#app-status-table thead');
             
@@ -192,11 +189,7 @@ $("#order").click(function() {
          	    var cusineValue;
         		 i=i+1;
         	    $.each(jsonObject, function(key,val){
-        	   
-        	   
         	    console.log("key : "+key+" ; value : "+val+ "index "+i);
-        	    
-        	    	
         	    if(key=='date')
         	    	{
         	    	dateValue = val;
@@ -209,8 +202,6 @@ $("#order").click(function() {
         	    	{
         	    	cusineValue = val;
         	    	}
-        	    	
-        	    
         	    } );
         	    var thedata={
         		        serialNo: i,
@@ -221,16 +212,9 @@ $("#order").click(function() {
         	    console.log("Inside the row binding" +JSON.stringify(thedata));
         		    showAppStatusData(thedata);
         	} ) ;
-        	
-        	
         	console.log("Inside the logic done");
         	$.mobile.changePage($('#application-status'));
         	$("#app-status-table").table("refresh");
-        	
-            
-
-        	
-        	
         },
 	    error      : function() {
 	        //console.log("error"+error);
@@ -245,20 +229,14 @@ $("#order").click(function() {
 
 function showAppStatusData(data) {
     var pageData = data;
-   
-   
     var tBody = $('#app-status-table tbody');
     var theRow = "<tr><td>" + data.serialNo + "</td>";
     theRow += "<td>" + data.cusineName + "</td>";
     theRow += "<td>" + data.date + "</td>";
     theRow += "<td>" + data.amount + "</td></tr>";
-    
     tBody.append(theRow);
-   // var str = $('#foodList').prop('outerHTML');
 	console.log("html theRow ---> "+theRow);
- //   $("#app-status-table").table("refresh");
-
-}
+ }
 function displayObject(testval) {
     //var id = $(this).attr("data-id");
     alert(testval);
