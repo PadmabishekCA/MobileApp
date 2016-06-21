@@ -22,7 +22,7 @@ var uname;
 $( "#submitforcheck" ).click(function() {
 	uname=$('#uname').val();
 	$.ajax({
-		url : "http://localhost:8080//confirmUser/"+uname,
+		url : "http://52.32.94.204:8080//confirmUser/"+uname,
 	      dataType:"json",
 	      cache: false,
 	      error:function (xhr, ajaxOptions, thrownError){
@@ -37,7 +37,7 @@ $( "#submitforcheck" ).click(function() {
 			        	       if(val ==$('#password').val() ){
 			        	    	   $.mobile.changePage($('#Home'));
 			        	    	   $.ajax({
-			        	    			url : "http://localhost:8080//getAllDetails",
+			        	    			url : "http://52.32.94.204:8080//getAllDetails",
 			        	    		      dataType:"json",
 			        	    		      cache: false,
 			        	    		      error:function (xhr, ajaxOptions, thrownError){
@@ -119,7 +119,7 @@ $( "#submitforcheck" ).click(function() {
 			        	    		 });
 			        	       }
 			        	       else
-			        	    	   alert("Invalid credentila");
+			        	    	   alert("Invalid credentials");
 			        	    	} );
 			        	
 		            	 
@@ -130,7 +130,7 @@ $( "#submitforcheck" ).click(function() {
 });
 $( "#fooditems" ).click(function() {
 	$.ajax({
-		url : "http://localhost:8080//getCuisines",
+		url : "http://52.32.94.204:8080//getCuisines",
 	      dataType:"json",
 	      cache: false,
 	      error:function (xhr, ajaxOptions, thrownError){
@@ -163,10 +163,10 @@ $("#order").click(function() {
 	$("#nameOfUserOrdering").val(uname);
 	var formData = $("form.orderForm").serializeArray();
 	console.log(JSON.stringify(formData));   
-	alert ("User who is ordering is "+ uname);
+	alert ("Order for user"+ uname);
 	$.ajax({
         type: "POST",
-        url: "http://localhost:8080/orderCuisine",
+        url: "http://52.32.94.204:8080/orderCuisine",
         data: JSON.stringify({ classroom: formData }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -218,7 +218,6 @@ $("#order").click(function() {
         },
 	    error      : function() {
 	        //console.log("error"+error);
-	        alert('Now working!');                  
 	    }
 	
     });
@@ -239,7 +238,6 @@ function showAppStatusData(data) {
  }
 function displayObject(testval) {
     //var id = $(this).attr("data-id");
-    alert(testval);
     
     $.mobile.changePage($('#CuisineOrderPage'));
     $('#fname').attr("value", testval);
