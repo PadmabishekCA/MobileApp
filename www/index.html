@@ -5,6 +5,7 @@
     	<script src="http://code.jquery.com/jquery-2.0.1.min.js">
     	 	</script>
     	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
         <!--
         Customize this policy to fit your own app's needs. For more guidance, see:
             https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
@@ -19,6 +20,18 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet"  href="http://code.jquery.com/mobile/git/jquery.mobile-git.css" /> 
+		<link rel="stylesheet" href="jquery.mobile.datepicker.css" />
+		<link rel="stylesheet" href="jquery.mobile.datepicker.theme.css" />
+		<script src="external/jquery-ui/datepicker.js"></script>
+			<script src="http://code.jquery.com/mobile/git/jquery.mobile-git.js"></script> 
+			<script src="jquery.mobile.datepicker.js"></script>
+			<script>
+				$(function(){
+					$( ".date-input-css" ).datepicker();
+				})
+			</script>
+		
         <title>GuestApp</title>
     </head>
     <body>
@@ -40,7 +53,7 @@
 			</div>
 			
 		</div>
-        </div> -->
+
         <div data-role="page" id="Home">
 			<div data-role="header">
 				
@@ -79,9 +92,9 @@
 			
 		</div>
 		
-			 <div data-role="page" id="application-status" data-add-back-btn="true">
+	 <div data-role="page" id="application-status" data-add-back-btn="true">
         <div data-role="header">
-            <h4>Invoice  Status for </h4>
+            <h4>Invoice  Status </h4>
         </div>
         <div id="application-status-content" name="application-status-content" role="main" class="ui-content">
             <table data-role="table" id="app-status-table" data-mode="reflow" class="ui-responsive table-stroke">
@@ -91,7 +104,20 @@
             </table>
         </div>
         <div data-role="footer"></div>
-    </div>
+     </div>
+     
+     <div data-role="page" id="booked-status" data-add-back-btn="true">
+     <div data-role="header">
+            <h4>Booked Status </h4>
+        </div>
+        <div id="application-status-content" name="application-status-content" role="main" class="ui-content">
+        	<table data-role="table" id="book-status-table" data-mode="reflow" class="ui-responsive table-stroke">
+                <thead>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+     </div>
 		
 		<div data-role="page" id="CuisineOrderPage">
 		<form class="orderForm">
@@ -120,6 +146,36 @@
 				</form>
 		</div>
 		
+		<div data-role="page" id="gamesBookingPage">
+			<div data-role="content">
+					<form class="gameBookingCheck" id ="gamesBookingCheck">
+					<input type="hidden" name="nameOfUserBooking" id ="nameOfUserBooking" value="">
+					<label for="gamesName">Game Name</label>
+					<input name="gamesName" id="gamesName" data-clear-btn="true" value="" type="text"/>
+					<label for="gamesDate">Pick the Date</label>
+					<!-- <input type="text" id ="gamesDate" data-role="date" data-inline="true" > -->
+					<input type="text" class="date-input" name="gamesDate" id ="gamesDate" data-inline="false" data-role="date">
+					<input data-enhanced="true" type="button" value="FetchSlotList" id="fetchSlotList"/>
+					</form>
+					
+		</div>
+		
+		</div>
+		<div data-role="page" id="gamesSlotStatus">
+		
+		<form class="gameAvailableSlot" id ="gameAvailableSlot">
+					<label for="mySelector">Available slots are</label>
+					  <select name="mySelector" id="mySelector"  multiple data-native-menu="false">
+					    <option>Please Choose</option>                
+					  </select>
+				<input data-enhanced="true" type="button" value="SelectSlots" id="selectSlots"/>
+				<input type="hidden" name="userNameForJson" id ="userNameForJson" value="">
+				<input type="hidden" name="bookingdateForJson" id ="bookingdateForJson" value="">
+				<input type="hidden" name="gameNameForJson" id ="gameNameForJson" value="">
+		</form>
+		
+		</div>
+			
 		
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>

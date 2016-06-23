@@ -22,7 +22,7 @@ var uname;
 $( "#submitforcheck" ).click(function() {
 	uname=$('#uname').val();
 	$.ajax({
-		url : "http://52.32.94.204:8080//confirmUser/"+uname,
+		url : "http://localhost:8080//confirmUser/"+uname,
 	      dataType:"json",
 	      cache: false,
 	      error:function (xhr, ajaxOptions, thrownError){
@@ -37,7 +37,7 @@ $( "#submitforcheck" ).click(function() {
 			        	       if(val ==$('#password').val() ){
 			        	    	   $.mobile.changePage($('#Home'));
 			        	    	   $.ajax({
-			        	    			url : "http://52.32.94.204:8080//getAllDetails",
+			        	    			url : "http://localhost:8080//getAllDetails",
 			        	    		      dataType:"json",
 			        	    		      cache: false,
 			        	    		      error:function (xhr, ajaxOptions, thrownError){
@@ -92,7 +92,7 @@ $( "#submitforcheck" ).click(function() {
 			        	    				        	    	
 			        	    				        	    if(key=='names')
 			        	    				        	    	{
-				        	    				        	   html +=val;
+				        	    				        	   html +='<a href="#" data-id="'+ val +'" >'+val+'</a>';;
 			        	    				        	    	}
 			        	    				        	    else if(key=='description')
 			        	    				        	    	{
@@ -128,36 +128,18 @@ $( "#submitforcheck" ).click(function() {
 	 });
 	
 });
-$( "#fooditems" ).click(function() {
-	$.ajax({
-		url : "http://52.32.94.204:8080//getCuisines",
-	      dataType:"json",
-	      cache: false,
-	      error:function (xhr, ajaxOptions, thrownError){
-		        debugger;
-		                alert(xhr.statusText);
-		                alert(thrownError);
-		            },
-		            success : function(json) {
-		            	console.log(JSON.stringify(json));
-			        	    $.each(json, function(key,val){
-			        	    console.log("key : "+key+" ; value : "+val);
-			        	    var html = '<li>' + key + ' ' + val +'<img src="/img/cusine/'+key+'.jpg"' +'>'+'</li>';
-			        	    $('#foodList').append(html);
-			        	    } );
-			        	
-		            	 
-		    	      }
-		            
-	 });
-});
-
-
 
 $("#foodList").on("click", "a[data-id]", function() {
 	 displayObject($(this).attr("data-id"));
 
 });
+
+$("#gamesList").on("click", "a[data-id]", function() {
+	displayGames($(this).attr("data-id"));
+
+});
+
+
 //Order submission
 $("#order").click(function() {
 	$("#nameOfUserOrdering").val(uname);
@@ -166,7 +148,7 @@ $("#order").click(function() {
 	alert ("Order for user"+ uname);
 	$.ajax({
         type: "POST",
-        url: "http://52.32.94.204:8080/orderCuisine",
+        url: "http://localhost:8080/orderCuisine",
         data: JSON.stringify({ classroom: formData }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -224,7 +206,120 @@ $("#order").click(function() {
 
 });
 
+$("#fetchSlotList").click(function() {
+	$("#nameOfUserBooking").val(uname);
+	var formData = $("form.gameBookingCheck").serializeArray();
+	console.log("Name details of booking"+JSON.stringify(formData));
+	var i=1;
+	$.ajax({
+        type: "POST",
+        url: "http://localhost:8080/checkSlot",
+        data: JSON.stringify({ classroom: formData }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+        	console.log("response object vlue -- > "+JSON.stringify(response.slotInfo));
+        	$.each(response.slotInfo, function(index,jsonObject){
+        		
+       		 var slotIdValue;
+        	    var intervalValue;
+        	    
+       	    $.each(jsonObject, function(key,val){
+       	    console.log("key : "+key+" ; value : "+val+ "index "+i);
+       	    if(key=='slotId')
+       	    	{
+       	    	slotId = val;
+       	    	}
+       	    else if(key=='intreval')
+       	    	{
+       	    	intervalValue =val;
+       	    	}
+       	   
+       	    } );
+       	 $("#mySelector").append('<option value="' + slotId + '">Option ' + intervalValue + '</option>');
+       	    
+       	} ) ;
+        	
+        	$.mobile.changePage($('#gamesSlotStatus'));
+        	$("#mySelector").trigger("change");
+        },
+	    error      : function() {
+	    	alert("Phase1 struck");
 
+	    }
+	
+    });
+
+});
+
+$("#selectSlots").click(function() {
+	alert("Dhoni");
+	$("#userNameForJson").val(uname);
+	var gameNameFromPreviousForm = document.getElementById("gamesName").getAttribute("value");
+	$("#gameNameForJson").val(gameNameFromPreviousForm);
+	var dateFromPreviousForm=document.getElementById("gamesDate").value;
+	$("#bookingdateForJson").val(dateFromPreviousForm);
+	var formData = $("form.gameAvailableSlot").serializeArray();
+	console.log("Slot details"+JSON.stringify(formData));
+
+	$.ajax({
+		type: "POST",
+        url: "http://localhost:8080/createGamesBooking",
+        data: JSON.stringify({ classroom: formData }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+        	console.log("response object vlue -- > "+JSON.stringify(response.userBookedInfo));
+        	var tHead = $('table#book-status-table thead');
+            
+            var headRow = "<tr><th data-priority='1'>Serial No</th>";
+            headRow += "<th data-priority='2'>Slot Intreval</th>";
+            headRow += "<th data-priority='3'>Booked Date </th>";
+            headRow += "<th data-priority='4'>Booked Game</th> </tr>";
+               
+            tHead.append(headRow);
+            console.log("html tHead ---> "+headRow);
+            var i=0;
+        	$.each(response.userBookedInfo, function(index,jsonObject){
+        		
+        		 var intreval;
+         	    var gamename;
+         	    var bookeddate;
+        		 i=i+1;
+        	    $.each(jsonObject, function(key,val){
+        	    console.log("key : "+key+" ; value : "+val+ "index "+i);
+        	    if(key=='slotIntreval')
+        	    	{
+        	    	intreval = val;
+        	    	}
+        	    else if(key=='gameName')
+        	    	{
+        	    	gamename =val;
+        	    	}
+        	    if(key=='bookingDate')
+        	    	{
+        	    	bookeddate = val;
+        	    	}
+        	    } );
+        	    var thedata={
+        		        serialNo: i,
+        		        slotIntreval: intreval,
+        		        bookedDateOfGame: bookeddate,
+        		        gameName:gamename,
+        		        };
+        	    console.log("Inside the row binding" +JSON.stringify(thedata));
+        		    showAppStatusDataofGame(thedata);
+        	} ) ;
+        	$.mobile.changePage($('#booked-status'));
+        	$("#book-status-table").table("refresh");
+        },
+	    error      : function() {
+	    	alert("Phase1 struck");
+	    	//console.log("error"+error);
+	    }
+	});
+	
+});
 
 function showAppStatusData(data) {
     var pageData = data;
@@ -236,13 +331,32 @@ function showAppStatusData(data) {
     tBody.append(theRow);
 	console.log("html theRow ---> "+theRow);
  }
+
+function showAppStatusDataofGame(data) {
+    var pageData = data;
+    var tBody = $('#book-status-table tbody');
+    var theRow = "<tr><td>" + data.serialNo + "</td>";
+    theRow += "<td>" + data.slotIntreval + "</td>";
+    theRow += "<td>" + data.bookedDateOfGame + "</td>";
+    theRow += "<td>" + data.gameName + "</td></tr>";
+    tBody.append(theRow);
+	console.log("html theRow ---> "+theRow);
+ }
+
+function displayGames(testval) {
+    $.mobile.changePage($('#gamesBookingPage'));
+    $('#gamesName').attr("value", testval);
+  
+}
+
+	      
 function displayObject(testval) {
-    //var id = $(this).attr("data-id");
-    
     $.mobile.changePage($('#CuisineOrderPage'));
     $('#fname').attr("value", testval);
   
 };
+
+
 
 
 app.initialize();
