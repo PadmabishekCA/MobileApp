@@ -21,10 +21,15 @@ var app = {
 var uname;
 $( "#submitforcheck" ).click(function() {
 	uname=$('#uname').val();
+
+	var formData = $("form.userLoginPage").serializeArray();
+	console.log("Name details of booking"+JSON.stringify(formData));
 	$.ajax({
-		url : "http://localhost:8080//confirmUser/"+uname,
-	      dataType:"json",
-	      cache: false,
+		type: "POST",
+        url: "http://localhost:8080/confirmUser",
+        data: JSON.stringify({ classroom: formData }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
 	      error:function (xhr, ajaxOptions, thrownError){
 		        debugger;
 		                alert(xhr.statusText);
@@ -145,7 +150,6 @@ $("#order").click(function() {
 	$("#nameOfUserOrdering").val(uname);
 	var formData = $("form.orderForm").serializeArray();
 	console.log(JSON.stringify(formData));   
-	alert ("Order for user"+ uname);
 	$.ajax({
         type: "POST",
         url: "http://localhost:8080/orderCuisine",
@@ -253,7 +257,6 @@ $("#fetchSlotList").click(function() {
 });
 
 $("#selectSlots").click(function() {
-	alert("Dhoni");
 	$("#userNameForJson").val(uname);
 	var gameNameFromPreviousForm = document.getElementById("gamesName").getAttribute("value");
 	$("#gameNameForJson").val(gameNameFromPreviousForm);
