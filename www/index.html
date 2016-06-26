@@ -57,7 +57,6 @@
 
         <div data-role="page" id="Home">
 			<div data-role="header">
-				
 				<h1>My Plan App</h1>
 			</div>
 			<div data-role="content">
@@ -72,15 +71,11 @@
 					</div>
 					<div id="tab-1a" class="ui-body-d ui-content">
 						<h4>Food content</h4>
-						
-						
 						<ul id="foodList"> </ul>
 					</div>
 					<div id="tab-1b" class="ui-body-d ui-content">
 						<h4>Games</h4>
-						<!-- <button id="target">Get Contact11</button>
- --> 						 <ul id="gamesList"></ul>
- 						 
+						 <ul id="gamesList"></ul>
 					</div>
 					<div id="tab-1c" class="ui-body-d ui-content">
 						<h4>Tour Places</h4>
@@ -90,7 +85,6 @@
 					$("#tabs-1").tabs({event: "mouseover"});
 				</script>
 			</div>
-			
 		</div>
 		
 	 <div data-role="page" id="application-status" data-add-back-btn="true">
@@ -129,7 +123,7 @@
 				</div>
 	   <div class="ui-field-contain">
 					<label for="qty">Quantity</label>
-					<input name="quantity" id="quantity" data-clear-btn="true" value="" type="text"/>
+					<input name="quantity" id="quantity" data-clear-btn="true" required="true" value="" type="text"/>
 				</div>
 		<div class="ui-field-contain">
 					<label for="fType">Type</label>
@@ -163,7 +157,6 @@
 		
 		</div>
 		<div data-role="page" id="gamesSlotStatus">
-		
 		<form class="gameAvailableSlot" id ="gameAvailableSlot">
 					<label for="mySelector">Available slots are</label>
 					  <select name="mySelector" id="mySelector"  multiple data-native-menu="false">
@@ -174,10 +167,92 @@
 				<input type="hidden" name="bookingdateForJson" id ="bookingdateForJson" value="">
 				<input type="hidden" name="gameNameForJson" id ="gameNameForJson" value="">
 		</form>
-		
 		</div>
+		<div data-role="page" id="AdminHome">
+			<div data-role="header">
+				<h1>Admin Page</h1>
+			</div>
+			<div data-role="content">
+			<a href="#Login" id="button-2" class="ui-btn ui-icon-home ui-btn-icon-left ui-corner-all"></a>
+				<div data-role="tabs" id="tabs-1">
+					<div data-role="navbar">
+						<ul>
+							<li><a href="#tab-1a" data-ajax="false">Food</a></li>
+							<li><a href="#tab-1b" data-ajax="false">Games</a></li>
+						</ul>
+					</div>
+					<div id="tab-1a" class="ui-body-d ui-content">
+						<h4>Food content</h4>
+						<ul>
+						<li><a href="#createCuisinePage" data-ajax="false">Create Cuisine</a></li>
+						<li><a href="#deleteCuisinePage" data-ajax="false">Delete Cuisine</a></li>
+						</ul>
+					</div>
+					<div id="tab-1b" class="ui-body-d ui-content">
+						<h4>Games</h4>
+						<ul>
+						<li><a href="#createGamePage" data-ajax="false">Create Game</a></li>
+						<li><a href="#deleteGamePage" data-ajax="false">Delete Game</a></li>
+						</ul>
+					</div>
+				</div>
+				<script>
+					$("#tabs-1").tabs({event: "mouseover"});
+				</script>
+				</div>
+			</div>
+			<div data-role="page" id="createCuisinePage">
+				<form class="createCuisineDetails" id ="createCuisineDetails">
+				<label for="cuisinename">Cuisine Name</label>
+				<input name="cuisineName" id="cuisineName" data-clear-btn="true" value="" placeholder="Enter Cuisine Name"  type="text"/>
+				<label for="cuisineAmount">Cuisine Amount</label>
+				<input name="cuisineAmount" id="cuisineAmount" data-clear-btn="true" value="" placeholder="Enter Cuisine Amount"  type="text"/>
+				<label for="cuisineDesc">Cuisine Description</label>
+				<textarea name="cuisineDesc" id="cuisineDesc"></textarea>
+				<input data-enhanced="true" type="button" name ="submitCuisine" value="CreateCuisine" id="submitCuisine"/>
+				</form>
+				<div data-role="popup" id="createCuisineResponse" data-position-to="window" data-transition="turn">
+				<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+				<p><font color="green">Cuisine added successfully</font></p>
+				</div>
+			</div>
 			
-		
+			<div data-role="page" id="deleteCuisinePage">
+				<form class="deleteCuisineDetails" id ="deleteCuisineDetails">
+				<label for="cuisineDelete">Cuisine Id for Deleting</label>
+				<input name="cuisineDeleteId" id="cuisineIdForDelete" data-clear-btn="true" value="" placeholder="Enter Cuisine Id for Deleting"  type="text"/>
+				<input data-enhanced="true" type="button" name ="deleteCuisine" value="DeleteCuisine" id="deleteCuisine"/>
+				</form>
+				<div data-role="popup" id="deleteCuisineResponse" data-position-to="window" data-transition="turn">
+				<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+				<p><font color="green">Cuisine deleted successfully</font></p>
+				</div>
+			</div>
+			<div data-role="page" id="createGamePage">
+				<form class="createGameDetails" id ="createGameDetails">
+				<label for="gamename">Game Name</label>
+				<input name="gameName" id="gameName" data-clear-btn="true" value="" placeholder="Enter Game Name"  type="text"/>
+				<label for="gameDesc">Cuisine Description</label>
+				<textarea name="gameDesc" id="gameDesc"></textarea>
+				<input data-enhanced="true" type="button" name ="submitGame" value="CreateGame" id="submitGame"/>
+				</form>
+				<div data-role="popup" id="createGameResponse" data-position-to="window" data-transition="turn">
+				<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+				<p><font color="green">Game added successfully</font></p>
+				</div>
+			</div>
+			<div data-role="page" id="deleteGamePage">
+				<form class="deleteGameDetails" id ="deleteGameDetails">
+				<label for="gameDelete">Game Id for Deleting</label>
+				<input name="gameDeleteId" id="gameIdForDelete" data-clear-btn="true" value="" placeholder="Enter Game Id for Deleting"  type="text"/>
+				<input data-enhanced="true" type="button" name ="deleteGame" value="DeleteGame" id="deleteGame"/>
+				</form>
+				<div data-role="popup" id="deleteGameResponse" data-position-to="window" data-transition="turn">
+				<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+				<p><font color="green">Game deleted successfully</font></p>
+				</div>
+			</div>
+
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>

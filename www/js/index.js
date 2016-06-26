@@ -39,7 +39,7 @@ $( "#submitforcheck" ).click(function() {
 		            	console.log(JSON.stringify(json));
 			        	    $.each(json, function(key,val){
 			        	    console.log("key : "+key+" ; value : "+val);
-			        	       if(val ==$('#password').val() ){
+			        	       if((val=='G')&&(key ==$('#password').val()) ){
 			        	    	   $.mobile.changePage($('#Home'));
 			        	    	   $.ajax({
 			        	    			url : "http://localhost:8080//getAllDetails",
@@ -123,6 +123,10 @@ $( "#submitforcheck" ).click(function() {
 			        	    			            
 			        	    		 });
 			        	       }
+							   else if((val=='A')&&(key ==$('#password').val()) ){
+								   $.mobile.changePage($('#AdminHome'));
+							   }
+			        	       
 			        	       else
 			        	    	   alert("Invalid credentials");
 			        	    	} );
@@ -322,6 +326,82 @@ $("#selectSlots").click(function() {
 	    }
 	});
 	
+});
+
+$("#submitCuisine").click(function() {
+	var formData = $("form.createCuisineDetails").serializeArray();
+	console.log("Create cuisine details "+JSON.stringify(formData));
+	$.ajax({
+		type: "POST",
+        url: "http://localhost:8080/createCuisine",
+        data: JSON.stringify({ classroom: formData }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error      : function() {
+	    	alert("Struck in cuisine creation");
+	    },
+	    success: function (response) {
+	    	console.log("response object vlue -- > "+JSON.stringify(response.isCreated));
+	    	 $("#createCuisineResponse").popup("open");
+	    }
+	});	    
+});
+
+$("#deleteCuisine").click(function() {
+	var formData = $("form.deleteCuisineDetails").serializeArray();
+	console.log("Delete cuisine details "+JSON.stringify(formData));
+	$.ajax({
+		type: "POST",
+        url: "http://localhost:8080/deleteCuisine",
+        data: JSON.stringify({ classroom: formData }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error      : function() {
+	    	alert("Struck in cuisine deletion");
+	    },
+	    success: function (response) {
+	    	console.log("response object vlue -- > "+JSON.stringify(response.isDeleted));
+	    	 $("#deleteCuisineResponse").popup("open");
+	    }
+	});	    
+});
+
+$("#submitGame").click(function() {
+	var formData = $("form.createGameDetails").serializeArray();
+	console.log("Create cuisine details "+JSON.stringify(formData));
+	$.ajax({
+		type: "POST",
+        url: "http://localhost:8080/createGames",
+        data: JSON.stringify({ classroom: formData }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error      : function() {
+	    	alert("Struck in cuisine creation");
+	    },
+	    success: function (response) {
+	    	console.log("response object vlue -- > "+JSON.stringify(response.isCreated));
+	    	$("#createGameResponse").popup("open");
+	    }
+	});	    
+});
+
+$("#deleteGame").click(function() {
+	var formData = $("form.deleteGameDetails").serializeArray();
+	console.log("Delete Game details "+JSON.stringify(formData));
+	$.ajax({
+		type: "POST",
+        url: "http://localhost:8080/deleteGames",
+        data: JSON.stringify({ classroom: formData }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        error      : function() {
+	    	alert("Struck in cuisine deletion");
+	    },
+	    success: function (response) {
+	    	console.log("response object vlue -- > "+JSON.stringify(response.isDeleted));
+	    	$("#deleteGameResponse").popup("open");
+	    }
+	});	    
 });
 
 function showAppStatusData(data) {
